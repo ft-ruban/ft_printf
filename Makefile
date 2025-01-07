@@ -1,7 +1,7 @@
 # Variables
 CFILES =	ft_printf.c
 OFILES = $(CFILES:%.c=%.o)
-LIBFT_PATH = libft 
+LIBFT_PATH = libft
 LIBFT = $(LIBFT_PATH)/libft.a
 
 # Compiler + flags
@@ -19,7 +19,7 @@ $(NAME): $(OFILES) $(LIBFT)
 	ar rcs $(NAME) $(OFILES) $(LIBFT)
 
 # Build object files
-%.o: %.c ft_printf.h
+$(BUILD_DIR)%.o: %(SRC_DIR)/%.c ft_printf.h
 	$(CC) $(CFLAGS) -c $< -o $@
 # Build the Test Executable
 $(TEST_EXEC): $(NAME) $(LIBFT) main.c 
