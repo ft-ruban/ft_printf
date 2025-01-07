@@ -32,6 +32,7 @@ CFILES = 	ft_atoi.c\
 			ft_substr.c \
 			ft_tolower.c \
 			ft_toupper.c \
+			ft_utoa.c \
 
 OFILES = $(CFILES:%.c=%.o)
 	

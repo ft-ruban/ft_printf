@@ -3,10 +3,10 @@
 
 int main (void)
 {
-    int test = 150;
-    char atoitest[150] = "13245";
-    ft_printf("ceci est un test j'adore le caca mhhh 42 %d oui", test);
-    test = atoi(atoitest);
-    printf("\n%d", test);
+    int d = 150;
+    int i = 42;
+    unsigned int u = -150; 
+    //unsigned int num = 20;
+    ft_printf("ceci est un test \n d = %d \n i = %i \n u = %u",d, i, u);
     return 0;
 }
