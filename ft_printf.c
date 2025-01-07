@@ -7,17 +7,13 @@ int ft_printf_format(va_list ptr, int i, const char* str)
     unsigned int uvalue;
 
     value = va_arg(ptr,int);
-    //uvalue = (unsigned int)value;
-    //printf("%u",uvalue);
     if (str[i+1] == 'u')
     {
         uvalue = (unsigned int) value;
-        value = uvalue;
         write(1,ft_utoa (uvalue), ft_strlen(ft_utoa(uvalue)));
     }
     if (str[i+1] == 'd' || str[i+1] == 'i') //a fix
     {
-        //value = va_arg(ptr,int);
         write(1,ft_itoa(value), ft_strlen(ft_itoa(value)));
         return_value = 2;
     }
