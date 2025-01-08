@@ -6,8 +6,11 @@ int main (void)
     int d = 150;
     int i = 42;
     char c = 'c';
-    unsigned int u = -150; 
+    unsigned int u = -150;
+    char s[124] = "Forty-Two";
+    int *ptr = &i;
     //unsigned int num = 20;
-    ft_printf("ceci est un test \n d = %d \n i = %i \n u = %u \n c = %c \n %% = %% bravo",d, i, u, c);
+    ft_printf("ceci est un test \n d = %d \n i = %i \n u = %u \n c = %c \n %% = %% \n s = %s\n p = %p\n",d, i, u, c, s,ptr);
+    printf("ceci est un test \n d = %d \n i = %i \n u = %u \n c = %c \n %% = %% \n s = %s\n p = %p\n",d, i, u, c, s,ptr);
     return 0;
 }

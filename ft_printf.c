@@ -1,5 +1,6 @@
 #include "ft_printf.h"
 #include <stdio.h>
+#include <stdint.h>
 int ft_printf_num(va_list ptr, int i, const char* str)
 {
     int value; //is it supposed to be a long?
@@ -24,18 +25,45 @@ int ft_printf_num(va_list ptr, int i, const char* str)
 int ft_printf_char(va_list ptr, int i, const char* str)
 {
     char value;
+    char* string_temp;
     
     if (str[i+1] == 'c')
     {
-        value = va_arg(ptr,int);
+        value = va_arg(ptr, int);
         write (1, &value, 1);
     }
     else if (str[i+1] == '%')
     {
         write (1, "%", 1);
     }
+    else if (str[i+1] == 's')
+    {
+        string_temp = va_arg(ptr,char *);
+        write (1, string_temp, ft_strlen((string_temp)));
+    }
     return (2);
     //value = va_arg(ptr,char)
+}
+int ft_print_hex(va_list ptr, int i, const char* str)
+{
+    void *string_temp;
+    char *test;
+    //int int_temp;
+    if (str[i+1] == 'p')
+    {
+        printf("je passe ici\n");
+        string_temp = va_arg(ptr, void *);
+        //printf("value String_temp = %p",string_temp);
+        test = ft_itoa((unsigned long)string_temp);
+        printf("test : %s\n",test);
+        write (1,test,16);
+    }
+    /*if (str[i+1] == 'x')
+    {
+        int_temp = va_arg(arg, int);
+        ft_itoa(int_temp, buffer, 16)
+    }*/
+    return (2);
 }
 int ft_printf (const char *str, ...)
 {
@@ -52,6 +80,8 @@ int ft_printf (const char *str, ...)
                 i += ft_printf_num(ptr, i, str);
             else if (str[i+1] == 'c' || str[i+1] == 's' || str[i+1] == '%')
                 i += ft_printf_char(ptr, i, str);
+            else 
+                i += ft_print_hex(ptr, i, str);
         }
         else
         {
