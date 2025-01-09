@@ -41,16 +41,18 @@ int ft_printf_char(va_list ptr, int i, const char* str)
         write (1, string_temp, ft_strlen((string_temp)));
     }
     return (2);
-    //value = va_arg(ptr,char)
 }
-char*    ft_itoa_hex(unsigned long nbr)
+char*    ft_itoa_hex(unsigned long nbr, int is_up)
 {
     char* result;
     unsigned long   length;
     unsigned long   buff;
     char* hex_table;
-
-    hex_table = ft_strdup("0123456789abcdef");
+    
+    if (is_up == 0)
+        hex_table = ft_strdup("0123456789abcdef");
+    else 
+        hex_table = ft_strdup("0123456789ABCDEF");
     length = 0;
     buff = nbr;
     while(buff > 0) 
@@ -58,13 +60,11 @@ char*    ft_itoa_hex(unsigned long nbr)
     buff /= 16;
     length++;
     }
-    result = malloc((length + 1) * sizeof(char));
+    result = ft_calloc((length + 1), sizeof(char));
     if (!result)
         return (0);
-    result[length] = 0;
-    while(length != 0)
+    while(length-- != 0)
     {
-        length--;
         result[length] = hex_table[nbr % 16];
         nbr /= 16;
     }
@@ -82,39 +82,22 @@ int ft_print_hex(va_list ptr, int i, const char* str)
     {
         string_temp = va_arg(ptr, void *);
         param = (unsigned long) string_temp;
-        test = ft_itoa_hex(param);
+        test = ft_itoa_hex(param, 0);
         write (1, "0x", 2);
         write (1, test, ft_strlen(test));
     }
     else
     {
     int_temp = va_arg(ptr, int);
-    test = ft_itoa_hex(int_temp);
-    int_temp = 0;
-    while (test[int_temp] != 0)
-        if (str[i+1] == 'x')
-        write (1, &test[int_temp++], 1);
-        else
-        write (1, ft_toupper(test[int_temp++], 1));
+    if (str[i+1] == 'x')
+        test = ft_itoa_hex(int_temp, 0);
+    else 
+        test = ft_itoa_hex(int_temp, 1);
+    write (1, test, ft_strlen(test)); 
     }
     return (2);
 }
     
-
-    /*if (str[i+1] == 'x')
-    {
-        int_temp = va_arg(ptr, int);
-        test = ft_itoa_hex(int_temp);
-        write (1, test, ft_strlen(test));    
-    }
-        if (str[i+1] == 'X')
-    {
-        int_temp = va_arg(ptr, int);
-        test = ft_itoa_hex(int_temp);
-        write (1, test, ft_strlen(test));    
-    }*/
-    return (2);
-}
 int ft_printf (const char *str, ...)
 {
     va_list ptr;
