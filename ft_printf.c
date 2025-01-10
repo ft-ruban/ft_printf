@@ -3,7 +3,7 @@
 #include <stdint.h>
 int ft_printf_num(va_list ptr, int i, const char* str, int *ptr_return_value)
 {
-    int value; //is it supposed to be a long?
+    int value;
     unsigned int uvalue;
     int len;
     char *str_value;
@@ -16,7 +16,7 @@ int ft_printf_num(va_list ptr, int i, const char* str, int *ptr_return_value)
         len = ft_strlen(str_value);
         write (1, str_value, len);
     }
-    else if (str[i+1] == 'd' || str[i+1] == 'i') //a fix
+    else if (str[i+1] == 'd' || str[i+1] == 'i')
     {
         str_value = ft_itoa(value);
         len = ft_strlen(str_value);
@@ -81,30 +81,30 @@ char*    ft_itoa_hex(unsigned long nbr, int is_up)
     return (result);
 }
 
-int ft_print_hex(va_list ptr, int i, const char* str /*int *ptr_return_value*/)
+int ft_print_hex(va_list ptr, int i, const char* str, int *ptr_return_value)
 {
-    void *string_temp;
-    char *test;
+    char *convert;
     unsigned long param;
     int int_temp;
+    int len;
 
     if (str[i+1] == 'p')
     {
-        string_temp = va_arg(ptr, void *);
-        param = (unsigned long) string_temp;
-        test = ft_itoa_hex(param, 0);
+        param = (unsigned long) va_arg(ptr, void *);
+        convert = ft_itoa_hex(param, 0);
         write (1, "0x", 2);
-        write (1, test, ft_strlen(test));
     }
     else
-    {
-    int_temp = va_arg(ptr, int);
+        int_temp = va_arg(ptr, int);
     if (str[i+1] == 'x')
-        test = ft_itoa_hex(int_temp, 0);
-    else 
-        test = ft_itoa_hex(int_temp, 1);
-    write (1, test, ft_strlen(test)); 
-    }
+        convert = ft_itoa_hex(int_temp, 0);
+    else if (str[i+1] == 'X') 
+        convert = ft_itoa_hex(int_temp, 1);
+    len = ft_strlen(convert);
+    write (1, convert, len);  
+    if (str[i+1] == 'p')
+        len += 2;
+    *ptr_return_value += len;
     return (2);
 }
     
@@ -126,7 +126,7 @@ int ft_printf (const char *str, ...)
             else if (str[i] == '%' && (str[i+1] == 'c' || str[i+1] == 's' || str[i+1] == '%'))
                 i += ft_printf_char(ptr, i, str, ptr_return_value);
             else if (str[i] == '%' && (str[i+1] == 'x' || str[i+1] == 'X' || str[i+1] == 'p'))
-                i += ft_print_hex(ptr, i, str/*, ptr_return_value*/);
+                i += ft_print_hex(ptr, i, str, ptr_return_value);
             else
             {
                 write(1,&str[i++], 1);
