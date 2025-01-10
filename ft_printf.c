@@ -1,45 +1,55 @@
 #include "ft_printf.h"
 #include <stdio.h>
 #include <stdint.h>
-int ft_printf_num(va_list ptr, int i, const char* str)
+int ft_printf_num(va_list ptr, int i, const char* str, int *ptr_return_value)
 {
     int value; //is it supposed to be a long?
-    int return_value;
     unsigned int uvalue;
+    int len;
+    char *str_value;
 
     value = va_arg(ptr,int);
     if (str[i+1] == 'u')
     {
         uvalue = (unsigned int) value;
-        write(1,ft_itoa (uvalue), ft_strlen(ft_itoa(uvalue)));
+        str_value = ft_utoa (uvalue);
+        len = ft_strlen(str_value);
+        write (1, str_value, len);
     }
-    if (str[i+1] == 'd' || str[i+1] == 'i') //a fix
+    else if (str[i+1] == 'd' || str[i+1] == 'i') //a fix
     {
-        write(1,ft_itoa(value), ft_strlen(ft_itoa(value)));
-        return_value = 2;
+        str_value = ft_itoa(value);
+        len = ft_strlen(str_value);
+        write (1, str_value, len);
     }
-    return (return_value);
+    *ptr_return_value += len;
+    free(str_value);
+    return (2);
 }
 
-int ft_printf_char(va_list ptr, int i, const char* str)
+int ft_printf_char(va_list ptr, int i, const char* str, int *ptr_return_value)
 {
     char value;
     char* string_temp;
-    
+    int  len;
+   
+    len = 1;
     if (str[i+1] == 'c')
     {
         value = va_arg(ptr, int);
-        write (1, &value, 1);
+        write (1, &value, len);
     }
     else if (str[i+1] == '%')
-    {
-        write (1, "%", 1);
-    }
+        write (1, "%", len);
     else if (str[i+1] == 's')
     {
         string_temp = va_arg(ptr,char *);
-        write (1, string_temp, ft_strlen((string_temp)));
+        if (!string_temp)
+            string_temp = "(null)";
+        len = ft_strlen(string_temp);
+        write (1, string_temp, len);
     }
+    *ptr_return_value += len;
     return (2);
 }
 char*    ft_itoa_hex(unsigned long nbr, int is_up)
@@ -71,7 +81,7 @@ char*    ft_itoa_hex(unsigned long nbr, int is_up)
     return (result);
 }
 
-int ft_print_hex(va_list ptr, int i, const char* str)
+int ft_print_hex(va_list ptr, int i, const char* str /*int *ptr_return_value*/)
 {
     void *string_temp;
     char *test;
@@ -101,22 +111,27 @@ int ft_print_hex(va_list ptr, int i, const char* str)
 int ft_printf (const char *str, ...)
 {
     va_list ptr;
-    va_start(ptr, str);
     int i;
-    //int return_value;
-    //int* ptr_return_value;
+    int return_value;
+    int* ptr_return_value;
 
-    //return_value = 0;
+    va_start (ptr, str);
+    return_value = 0;
+    ptr_return_value = &return_value;
     i = 0;
     while (str[i] != '\0')
     {
             if  (str[i] == '%' && (str[i+1] == 'u' || str[i+1] == 'd' || str[i+1] == 'i'))
-                i += ft_printf_num(ptr, i, str);
+                i += ft_printf_num(ptr, i, str, ptr_return_value);
             else if (str[i] == '%' && (str[i+1] == 'c' || str[i+1] == 's' || str[i+1] == '%'))
-                i += ft_printf_char(ptr, i, str);
-            else if (str[i] == '%' && (str[i+1] == 'x' || str[i+1] == 'X' || str[i+1] == 'p'))                        i += ft_print_hex(ptr, i, str);
+                i += ft_printf_char(ptr, i, str, ptr_return_value);
+            else if (str[i] == '%' && (str[i+1] == 'x' || str[i+1] == 'X' || str[i+1] == 'p'))
+                i += ft_print_hex(ptr, i, str/*, ptr_return_value*/);
             else
-            write(1,&str[i++], 1);
+            {
+                write(1,&str[i++], 1);
+                return_value += 1;
+            }
     }
-    return 1;
+    return (return_value);
 }
