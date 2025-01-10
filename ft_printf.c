@@ -11,7 +11,7 @@ int ft_printf_num(va_list ptr, int i, const char* str)
     if (str[i+1] == 'u')
     {
         uvalue = (unsigned int) value;
-        write(1,ft_utoa (uvalue), ft_strlen(ft_utoa(uvalue)));
+        write(1,ft_itoa (uvalue), ft_strlen(ft_itoa(uvalue)));
     }
     if (str[i+1] == 'd' || str[i+1] == 'i') //a fix
     {
@@ -103,24 +103,20 @@ int ft_printf (const char *str, ...)
     va_list ptr;
     va_start(ptr, str);
     int i;
+    //int return_value;
+    //int* ptr_return_value;
 
+    //return_value = 0;
     i = 0;
     while (str[i] != '\0')
     {
-        if (str[i] == '%')
-        {
-            if (str[i+1] == 'u' || str[i+1] == 'd' || str[i+1] == 'i')
+            if  (str[i] == '%' && (str[i+1] == 'u' || str[i+1] == 'd' || str[i+1] == 'i'))
                 i += ft_printf_num(ptr, i, str);
-            else if (str[i+1] == 'c' || str[i+1] == 's' || str[i+1] == '%')
+            else if (str[i] == '%' && (str[i+1] == 'c' || str[i+1] == 's' || str[i+1] == '%'))
                 i += ft_printf_char(ptr, i, str);
-            else 
-                i += ft_print_hex(ptr, i, str);
-        }
-        else
-        {
-            write(1,&str[i], 1);
-            i++;
-        }
+            else if (str[i] == '%' && (str[i+1] == 'x' || str[i+1] == 'X' || str[i+1] == 'p'))                        i += ft_print_hex(ptr, i, str);
+            else
+            write(1,&str[i++], 1);
     }
     return 1;
 }
