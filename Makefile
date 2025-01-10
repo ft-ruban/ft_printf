@@ -19,7 +19,7 @@ $(NAME): $(OFILES) $(LIBFT)
 	ar rcs $(NAME) $(OFILES) $(LIBFT)
 
 # Build object files
-$(BUILD_DIR)%.o: %(SRC_DIR)/%.c ft_printf.h
+%.o: %.c ft_printf.h
 	$(CC) $(CFLAGS) -c $< -o $@
 # Build the Test Executable
 $(TEST_EXEC): $(NAME) $(LIBFT) main.c 

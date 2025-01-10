@@ -1,6 +1,5 @@
 #include "ft_printf.h"
-#include <stdio.h>
-#include <stdint.h>
+
 int ft_printf_num(va_list ptr, int i, const char* str, int *ptr_return_value)
 {
     int value;
@@ -52,17 +51,13 @@ int ft_printf_char(va_list ptr, int i, const char* str, int *ptr_return_value)
     *ptr_return_value += len;
     return (2);
 }
-char*    ft_itoa_hex(unsigned long nbr, int is_up)
+char*    ft_itoa_hex(unsigned long nbr)
 {
     char* result;
     unsigned long   length;
     unsigned long   buff;
-    char* hex_table;
-    
-    if (is_up == 0)
-        hex_table = ft_strdup("0123456789abcdef");
-    else 
-        hex_table = ft_strdup("0123456789ABCDEF");
+    unsigned long remainder;
+
     length = 0;
     buff = nbr;
     while(buff > 0) 
@@ -75,7 +70,11 @@ char*    ft_itoa_hex(unsigned long nbr, int is_up)
         return (0);
     while(length-- != 0)
     {
-        result[length] = hex_table[nbr % 16];
+        remainder = nbr % 16;
+        if (remainder < 10)
+            result[length] = remainder + '0';
+        else
+            result[length] = remainder - 10 + 'a';
         nbr /= 16;
     }
     return (result);
@@ -91,17 +90,18 @@ int ft_print_hex(va_list ptr, int i, const char* str, int *ptr_return_value)
     if (str[i+1] == 'p')
     {
         param = (unsigned long) va_arg(ptr, void *);
-        convert = ft_itoa_hex(param, 0);
+        convert = ft_itoa_hex(param);
         write (1, "0x", 2);
     }
     else
         int_temp = va_arg(ptr, int);
-    if (str[i+1] == 'x')
-        convert = ft_itoa_hex(int_temp, 0);
-    else if (str[i+1] == 'X') 
-        convert = ft_itoa_hex(int_temp, 1);
+    if (str[i+1] == 'x' || str[i+1] == 'X')
+        convert = ft_itoa_hex(int_temp);
     len = ft_strlen(convert);
-    write (1, convert, len);  
+    if (str[i+1] == 'X')
+        ft_strtoupper(convert);
+    write (1, convert, len); 
+    free(convert);
     if (str[i+1] == 'p')
         len += 2;
     *ptr_return_value += len;
@@ -133,5 +133,6 @@ int ft_printf (const char *str, ...)
                 return_value += 1;
             }
     }
+    va_end (ptr);
     return (return_value);
 }
