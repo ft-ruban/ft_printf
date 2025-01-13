@@ -1,4 +1,5 @@
 #include "ft_printf.h"
+#include <stdio.h>
 
 int ft_printf_num(va_list ptr, int i, const char* str, int *ptr_return_value)
 {
@@ -15,7 +16,7 @@ int ft_printf_num(va_list ptr, int i, const char* str, int *ptr_return_value)
         len = ft_strlen(str_value);
         write (1, str_value, len);
     }
-    else if (str[i+1] == 'd' || str[i+1] == 'i')
+    else
     {
         str_value = ft_itoa(value);
         len = ft_strlen(str_value);
@@ -80,11 +81,23 @@ char*    ft_itoa_hex(unsigned long nbr)
     return (result);
 }
 
+// char*    ft_itoa_hex(unsigned long nbr)
+// {
+//     int n;
+
+//     if (nbr >= 10)
+//     {
+//         ft_itoa_hex(nbr / 10);
+//         n = nbr % 10;
+//     }
+//     write(1, n, 1);
+// }
+
 int ft_print_hex(va_list ptr, int i, const char* str, int *ptr_return_value)
 {
     char *convert;
     unsigned long param;
-    int int_temp;
+    unsigned int int_temp;
     int len;
 
     if (str[i+1] == 'p')

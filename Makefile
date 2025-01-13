@@ -12,11 +12,12 @@ NAME = libftprintf.a
 TEST_EXEC = test_program
 
 # Default Rule
-all: $(NAME)
+all: $(NAME) $(LIBFT)
 
 # Create the Static Library
-$(NAME): $(OFILES) $(LIBFT)
-	ar rcs $(NAME) $(OFILES) $(LIBFT)
+ $(NAME): $(OFILES)  ft_printf.h
+	cp $(LIBFT) $(NAME)
+	ar rcs $(NAME) $(OFILES)
 
 # Build object files
 %.o: %.c ft_printf.h
