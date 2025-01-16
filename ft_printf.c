@@ -52,7 +52,7 @@ int ft_printf_char(va_list ptr, int i, const char* str, int *ptr_return_value)
     *ptr_return_value += len;
     return (2);
 }
-char*    ft_itoa_hex(unsigned long nbr)
+/*char*    ft_itoa_hex(unsigned long nbr)
 {
     char* result;
     unsigned long   length;
@@ -79,19 +79,9 @@ char*    ft_itoa_hex(unsigned long nbr)
         nbr /= 16;
     }
     return (result);
-}
+}*/
 
-// char*    ft_itoa_hex(unsigned long nbr)
-// {
-//     int n;
 
-//     if (nbr >= 10)
-//     {
-//         ft_itoa_hex(nbr / 10);
-//         n = nbr % 10;
-//     }
-//     write(1, n, 1);
-// }
 
 int ft_print_hex(va_list ptr, int i, const char* str, int *ptr_return_value)
 {
@@ -103,13 +93,20 @@ int ft_print_hex(va_list ptr, int i, const char* str, int *ptr_return_value)
     if (str[i+1] == 'p')
     {
         param = (unsigned long) va_arg(ptr, void *);
-        convert = ft_itoa_hex(param);
+        if (param == 0)
+        {
+            write (1,"(nil)", 5);
+            *ptr_return_value += 5;
+            return (2);
+        }
         write (1, "0x", 2);
+        //printf("param : %lu\n", param);
+        convert = ft_itoa_hexx(param);
     }
     else
         int_temp = va_arg(ptr, int);
     if (str[i+1] == 'x' || str[i+1] == 'X')
-        convert = ft_itoa_hex(int_temp);
+        convert = ft_itoa_hexx(int_temp);
     len = ft_strlen(convert);
     if (str[i+1] == 'X')
         ft_strtoupper(convert);
