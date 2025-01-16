@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 09:54:22 by ldevoude          #+#    #+#             */
-/*   Updated: 2024/12/08 19:53:01 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/01/16 09:32:13 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	count_size(char const *s, char c, int *i)
 	return (count);
 }
 
-char	**ft_free_split(char **ptr)
+static char	**ft_free_split(char **ptr)
 {
 	int	index;
 
@@ -71,11 +71,11 @@ static char	**splited(char const *s, char **ptr, char c, int n_word)
 
 static int	count_substrings(char const *s, char c)
 {
-	//int	i;
+	int	i;
 	int	counter;
 
 	counter = 0;
-	//i = 0;
+	i = 0;
 	while (*s)
 	{
 		while (*s == c)
@@ -92,11 +92,11 @@ static int	count_substrings(char const *s, char c)
 
 char	**ft_split(char const *s, char c)
 {
-//	int		i;
+	int		i;
 	int		count;
 	char	**ptr;
 
-//	i = 0;
+	i = 0;
 	if (!s)
 		return (NULL);
 	count = count_substrings(s, c);
@@ -130,3 +130,4 @@ int	main(void)
 	ft_free_split(result);
 	return (0);
 }*/
+

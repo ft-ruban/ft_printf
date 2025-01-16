@@ -1,5 +1,7 @@
 # Variables
-CFILES =	ft_printf.c
+CFILES =	ft_printf.c \
+			ft_printf_cases.c \
+
 OFILES = $(CFILES:%.c=%.o)
 LIBFT_PATH = libft
 LIBFT = $(LIBFT_PATH)/libft.a
