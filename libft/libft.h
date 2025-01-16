@@ -6,14 +6,15 @@
 /*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 16:07:07 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/01/16 10:09:13 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/01/16 11:07:46 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 
 # define LIBFT_H
-
+# define TRUE 1
+# define FALSE 0
 # include <stdlib.h>
 # include <unistd.h>
 

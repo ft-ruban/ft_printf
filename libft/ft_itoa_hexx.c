@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:47:42 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/01/16 10:07:53 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/01/16 11:16:19 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ unsigned long	calculate_length(unsigned long nbr)
 	return (length);
 }
 
-char	zero_case(char *result)
+char	*zero_case(void)
 {
+	char	*result;
+
 	result = ft_calloc(2, sizeof(char));
 	if (!result)
 		return (0);
@@ -42,10 +44,7 @@ char	*ft_itoa_hexx(unsigned long nbr)
 	unsigned long	remainder;
 
 	if (nbr == 0)
-	{
-		zero_case(result);
-		return (result);
-	}
+		return (zero_case());
 	length = calculate_length(nbr);
 	result = ft_calloc((length + 1), sizeof(char));
 	if (!result)
