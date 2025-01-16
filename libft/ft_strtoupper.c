@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_strtoupper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:00:40 by ldevoude          #+#    #+#             */
-/*   Updated: 2024/12/08 20:22:25 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/01/16 10:00:12 by ldevoude         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 char	*ft_strtoupper(char *convert)
 {
-    int i; 
+	int	i;
 
-    i = 0;
-    while (convert[i] != 0)
-    {
-	    if (convert[i] >= 'a' && convert[i] <= 'z')
-		    convert[i] -= 32;
-        i++;
-    }
-    return (convert);
+	i = 0;
+	while (convert[i] != 0)
+	{
+		if (convert[i] >= 'a' && convert[i] <= 'z')
+			convert[i] -= 32;
+		i++;
+	}
+	return (convert);
 }
 /*
 #include <ctype.h>

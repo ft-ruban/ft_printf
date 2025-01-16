@@ -6,60 +6,45 @@
 /*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 10:49:41 by ldevoude          #+#    #+#             */
-/*   Updated: 2024/12/08 20:27:15 by ldevoude         ###   ########lyon.fr   */
+/*   Updated: 2025/01/16 10:04:30 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <limits.h>
 
-static char	*convert(long n, int i, char *result, char *buff)
+static char	*convert(long n, char *result, int length)
 {
-	int	length;
-	int	j;
-
-	length = i;
-	j = i;
+	result[length] = '\0';
+	if (n == 0)
+	{
+		result[0] = '0';
+		return (result);
+	}
 	while (n > 0)
 	{
-		buff[i] = n % 10 + 48;
+		result[--length] = n % 10 + '0';
 		n /= 10;
-		i++;
 	}
-	i--;
-	while (i != length - 1)
-	{
-		result[j++] = buff[i--];
-	}
-	result[j] = 0;
 	return (result);
 }
 
-static char	*count_for_malloc(long *integer, int *is_negative)
+static char	*count_for_malloc(long integer, int is_negative, int *length)
 
 {
 	char	*result;
-	int		count;
-	long	buff;
 
-	count = 0;
-	if (*is_negative == 1)
-		count++;
-	if (*integer < 0)
+	if (is_negative || integer == 0)
+		(*length)++;
+	while (integer > 0)
 	{
-		(*is_negative) = 1;
-		(*integer) = (*integer) * -1;
-		count++;
+		integer /= 10;
+		(*length)++;
 	}
-	buff = *integer;
-	while (buff > 0)
-	{
-		buff /= 10;
-		count++;
-	}
-	result = malloc((count + 1) * sizeof(char));
+	result = malloc((*length + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
-	if (*is_negative > 0)
+	if (is_negative)
 		result[0] = '-';
 	return (result);
 }
@@ -67,29 +52,24 @@ static char	*count_for_malloc(long *integer, int *is_negative)
 char	*ft_itoa(int n)
 {
 	char	*result;
-	int		i;
-	char	*buff;
+	int		is_negative;
 	long	ln;
+	int		length;
 
-	i = 0;
+	is_negative = 0;
+	length = 0;
+	result = NULL;
 	ln = n;
-	if (n == 0)
+	if (ln < 0)
 	{
-		result = ft_strdup("0");
-		if (!result)
-			return (NULL);
-		return (result);
+		is_negative = 1;
+		ln *= -1;
 	}
-	buff = count_for_malloc(&ln, &i);
-	if (!buff)
+	result = count_for_malloc(ln, is_negative, &length);
+	if (!result)
 		return (NULL);
-	result = count_for_malloc(&ln, &i);
-	if (!result)
-		return (free(buff), NULL);
-	result = convert(ln, i, result, buff);
-	if (!result)
-		return (free(buff), NULL);
-	return (free(buff), result);
+	result = convert(ln, result, length);
+	return (result);
 }
 
 /*

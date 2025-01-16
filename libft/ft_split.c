@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 09:54:22 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/01/16 09:32:13 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:10:03 by ldevoude         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,3 @@ int	main(void)
 	ft_free_split(result);
 	return (0);
 }*/
-
