@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldevoude <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/16 08:26:58 by ldevoude          #+#    #+#             */
+/*   Updated: 2025/01/16 08:37:23 by ldevoude         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include <stdio.h>
 
@@ -52,57 +64,39 @@ int ft_printf_char(va_list ptr, int i, const char* str, int *ptr_return_value)
     *ptr_return_value += len;
     return (2);
 }
-/*char*    ft_itoa_hex(unsigned long nbr)
+int ft_print_pointer(va_list ptr, int *ptr_return_value)
 {
-    char* result;
-    unsigned long   length;
-    unsigned long   buff;
-    unsigned long remainder;
+	unsigned long param;
+	char *convert;
+	int len;
 
-    length = 0;
-    buff = nbr;
-    while(buff > 0) 
-    {
-    buff /= 16;
-    length++;
-    }
-    result = ft_calloc((length + 1), sizeof(char));
-    if (!result)
-        return (0);
-    while(length-- != 0)
-    {
-        remainder = nbr % 16;
-        if (remainder < 10)
-            result[length] = remainder + '0';
-        else
-            result[length] = remainder - 10 + 'a';
-        nbr /= 16;
-    }
-    return (result);
-}*/
-
+	param = (unsigned long) va_arg(ptr, void *);
+	if (param == 0)
+	{
+		write (1,"(nil)", 5);
+		*ptr_return_value += 5;
+		return (2);
+	}
+	write (1, "0x", 2);
+	convert = ft_itoa_hexx(param);
+	len = ft_strlen(convert);
+	write (1, convert, len);
+	free (convert);
+	len += 2;
+	*ptr_return_value += len;
+	return (2);
+}
 
 
 int ft_print_hex(va_list ptr, int i, const char* str, int *ptr_return_value)
 {
     char *convert;
-    unsigned long param;
     unsigned int int_temp;
     int len;
 
+	convert = NULL;
     if (str[i+1] == 'p')
-    {
-        param = (unsigned long) va_arg(ptr, void *);
-        if (param == 0)
-        {
-            write (1,"(nil)", 5);
-            *ptr_return_value += 5;
-            return (2);
-        }
-        write (1, "0x", 2);
-        //printf("param : %lu\n", param);
-        convert = ft_itoa_hexx(param);
-    }
+		return (ft_print_pointer (ptr, ptr_return_value));
     else
         int_temp = va_arg(ptr, int);
     if (str[i+1] == 'x' || str[i+1] == 'X')
@@ -112,8 +106,6 @@ int ft_print_hex(va_list ptr, int i, const char* str, int *ptr_return_value)
         ft_strtoupper(convert);
     write (1, convert, len); 
     free(convert);
-    if (str[i+1] == 'p')
-        len += 2;
     *ptr_return_value += len;
     return (2);
 }
