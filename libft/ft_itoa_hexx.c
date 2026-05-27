@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:47:42 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/01/16 11:16:19 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:23:34 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*zero_case(void)
 {
 	char	*result;
 
-	result = ft_calloc(2, sizeof(char));
+	result = ft_calloc (2, sizeof(char));
 	if (!result)
 		return (0);
 	result[0] = '0';

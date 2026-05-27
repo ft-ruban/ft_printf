@@ -6,7 +6,7 @@
 /*   By: ldevoude <ldevoude@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 08:26:58 by ldevoude          #+#    #+#             */
-/*   Updated: 2025/01/16 09:15:06 by ldevoude         ###   ########.fr       */
+/*   Updated: 2025/01/27 08:59:21 by ldevoude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	ft_printf(const char *str, ...)
 	int		return_value;
 	int		*ptr_return_value;
 
+	if (str == NULL)
+		return (-1);
 	va_start(ptr, str);
 	return_value = 0;
 	ptr_return_value = &return_value;

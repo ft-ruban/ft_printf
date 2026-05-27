@@ -11,33 +11,39 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 # Targets
 NAME = libftprintf.a
-TEST_EXEC = test_program
+TEST_EXEC = libftprintf
 
 # Default Rule
-all: $(NAME) $(LIBFT)
+all: $(NAME)
 
 # Create the Static Library
- $(NAME): $(OFILES)  ft_printf.h
+ $(NAME): $(OFILES) $(LIBFT)  ft_printf.h
 	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OFILES)
 
 # Build object files
 %.o: %.c ft_printf.h
 	$(CC) $(CFLAGS) -c $< -o $@
+
 # Build the Test Executable
-$(TEST_EXEC): $(NAME) $(LIBFT) main.c 
-	$(CC) $(CFLAGS) main.c $(NAME) $(LIBFT) -o $(TEST_EXEC)
+$(TEST_EXEC): $(NAME) main.c 
+	$(CC) $(CFLAGS) main.c $(NAME) -o $(TEST_EXEC)
+
 # Clean Object Files
 clean:
 	rm -f $(OFILES)
+	$(MAKE) -C $(LIBFT_PATH) clean
+
 # Clean All Build Artifacts
 fclean: clean
 	rm -f $(NAME) $(TEST_EXEC)
+	$(MAKE) -C $(LIBFT_PATH) fclean
 
 re: fclean all
 
 # ensure libft is built before linking
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH)
+	$(MAKE) -C $(LIBFT_PATH) all
+	$(MAKE) -C $(LIBFT_PATH) clean
 
 .PHONY: all clean fclean re
