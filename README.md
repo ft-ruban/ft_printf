@@ -3,7 +3,7 @@
 # Project ft_printf
 
 ## Description
-This project involves recode a 'selfmade' printf(see ```bash man printf```) with reduced features the main notion around the project is to learn how to handle a variable number(s) of parameter(s) in a given function thanks to STD_VARG
+This project involves recode a 'selfmade' printf(see ```man printf```) with reduced features the main notion around the project is to learn how to handle a variable number(s) of parameter(s) in a given function thanks to STD_VARG
 ## Elements of the project
 
 ### ft_printf.c && ft_printf.h
