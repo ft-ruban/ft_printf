@@ -11,7 +11,7 @@ Main part of the project, it take an array of char called str followed by potent
 end va and return how much character in total was printed (return_value)
 
 ### ft_printf_cases.c 
-find out if we are dealing with a numerical value(unsigned, decimal, int), a char (char, string, or another %), a hexadecimal value, then print the content of the variable thanks to our function and rise return_value value accordingly.
+Part to find out what type of variable we are dealing with. If it is a numerical value(unsigned, decimal, int), a char (char, string, or another %), a hexadecimal value, then print the content of the variable thanks to our function and rise return_value value accordingly.
 
 ### libft folder
 various selfmade tools as we are not allowed to use their official version for the project.
